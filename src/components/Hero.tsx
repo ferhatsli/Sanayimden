@@ -18,8 +18,8 @@ export function Hero({ onScrollToForm }: HeroProps) {
           Sanayimden'e Katıl – Yeni Müşteriler Seni Bekliyor!
         </h1>
 
-        <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-          Yakındaki araç sahiplerinden iş al, teklif ver, işini büyüt.
+        <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+          Binlerce araç sahibine ulaşarak işlerinizi büyütün, müşteri ağınızı genişletin. Uygulamamıza kayıt olarak hizmetlerinizi sergileyebilir, konumunuza en yakın araç sahipleriyle buluşabilirsiniz. Güvenilir bir platformda yerinizi alın, sanayideki emeğiniz dijital dünyada da görünür olsun!
         </p>
 
         <button

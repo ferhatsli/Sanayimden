@@ -27,9 +27,14 @@ export function Benefits() {
   return (
     <section className="py-16 px-6 bg-gradient-to-br from-slate-50 to-gray-100">
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-slate-900">
-          Neden Sanayimden?
-        </h2>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">
+            Neden Sanayimden?
+          </h2>
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            🔧 Yedek parça arama derdine son! Sanayimden.com'da ihtiyacın olan parçayı kolayca bul, fiyatları karşılaştır, en uygun tedarikçiye hemen ulaş. Tedariğin aksamadan, işlerin hız kesmeden devam etsin!
+          </p>
+        </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {benefits.map((benefit, index) => (
