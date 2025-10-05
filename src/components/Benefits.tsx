@@ -1,4 +1,4 @@
-import { MapPin, CreditCard, TrendingUp, Clock } from 'lucide-react';
+import { MapPin, CreditCard, TrendingUp, Search } from 'lucide-react';
 
 export function Benefits() {
   const benefits = [
@@ -18,9 +18,9 @@ export function Benefits() {
       description: 'İş ağını sürekli büyüt'
     },
     {
-      icon: Clock,
-      title: 'İşini Hızlı Büyüt',
-      description: 'Daha çok iş, daha çok kazanç'
+      icon: Search,
+      title: 'Yedek Parça Bul',
+      description: 'Kolayca ara, fiyat karşılaştır, hemen ulaş'
     }
   ];
 
