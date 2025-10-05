@@ -63,9 +63,16 @@ export function SignupForm() {
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-slate-900">
           Usta Kayıt Formu
         </h2>
-        <p className="text-center text-gray-600 mb-8 text-lg">
-          Hemen başvur, yeni müşterilere ulaş
-        </p>
+        <div className="text-center mb-8">
+          <p className="text-gray-600 text-lg mb-2">
+            Hemen başvur, yeni müşterilere ulaş
+          </p>
+          <div className="bg-orange-50 border-2 border-orange-500 rounded-lg p-4 inline-block">
+            <p className="text-slate-900 font-bold text-xl">
+              Ön Kayıt Ücreti: <span className="text-orange-600 text-2xl">99.90 TL</span>
+            </p>
+          </div>
+        </div>
 
         <form onSubmit={handleSubmit} className="bg-gray-50 p-8 rounded-xl shadow-lg">
           <div className="mb-6">
