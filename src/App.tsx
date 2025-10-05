@@ -16,6 +16,7 @@ function App() {
     <div className="min-h-screen bg-white">
       <Hero onScrollToForm={scrollToForm} />
       <HowItWorks />
+      <AppScreen />
       <Benefits />
       <SignupForm />
       <Footer />
