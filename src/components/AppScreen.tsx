@@ -1,4 +1,3 @@
-import Image from 'next/image';
 
 export function AppScreens() {
   const screens = [
@@ -40,11 +39,9 @@ export function AppScreens() {
               className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all transform hover:scale-105 p-4 flex flex-col items-center"
             >
               <div className="rounded-xl overflow-hidden border border-gray-200 shadow-inner w-full">
-                <Image
+                <img
                   src={screen.src}
                   alt={screen.alt}
-                  width={300}
-                  height={600}
                   className="object-cover w-full h-auto rounded-xl"
                 />
               </div>
