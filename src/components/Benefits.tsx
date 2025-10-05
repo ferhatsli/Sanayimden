@@ -26,14 +26,31 @@ export function Benefits() {
 
   return (
     <section className="py-16 px-6 bg-gradient-to-br from-slate-50 to-gray-100">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">
             Neden Sanayimden?
           </h2>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed mb-8">
             🔧 Yedek parça arama derdine son! Sanayimden.com'da ihtiyacın olan parçayı kolayca bul, fiyatları karşılaştır, en uygun tedarikçiye hemen ulaş. Tedariğin aksamadan, işlerin hız kesmeden devam etsin!
           </p>
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            <img
+              src="https://images.pexels.com/photos/3806288/pexels-photo-3806288.jpeg?auto=compress&cs=tinysrgb&w=400"
+              alt="Auto repair shop"
+              className="rounded-xl shadow-lg object-cover h-48 w-full"
+            />
+            <img
+              src="https://images.pexels.com/photos/13065690/pexels-photo-13065690.jpeg?auto=compress&cs=tinysrgb&w=400"
+              alt="Car parts"
+              className="rounded-xl shadow-lg object-cover h-48 w-full"
+            />
+            <img
+              src="https://images.pexels.com/photos/4489743/pexels-photo-4489743.jpeg?auto=compress&cs=tinysrgb&w=400"
+              alt="Mechanic tools"
+              className="rounded-xl shadow-lg object-cover h-48 w-full"
+            />
+          </div>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
