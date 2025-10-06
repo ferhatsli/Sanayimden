@@ -1,4 +1,5 @@
 import { useState, FormEvent } from 'react';
+import { Turnstile } from '@marsidev/react-turnstile';
 import { supabase } from '../lib/supabase';
 import { CheckCircle, Loader2, AlertTriangle, CreditCard, Copy, Check } from 'lucide-react';
 
@@ -11,6 +12,7 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
   const [fullName, setFullName] = useState('');
   const [shopName, setShopName] = useState('');
   const [phone, setPhone] = useState('');
+  const [token, setToken] = useState<string | null>(null);
   
   // Yardımcı: Farklı giriş biçimlerini yerel TR formatına çevirir.
   // "+90 505 ...", "90505 ...", "505 ..." -> "0505..." (11 hane)
@@ -75,6 +77,13 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
         return;
       }
 
+      // Turnstile doğrulaması (client-side gate)
+      if (!token) {
+        setError('Lütfen robot olmadığınızı doğrulayın.');
+        setLoading(false);
+        return;
+      }
+
       const { error: submitError } = await supabase
         .from('mechanic_signups')
         .insert([
@@ -90,6 +99,7 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
       if (submitError) throw submitError;
 
       setSuccess(true);
+      setToken(null);
       setFullName('');
       setShopName('');
       setPhone('');
@@ -307,9 +317,25 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
             </div>
           )}
 
+          {/* Turnstile */}
+          <div className="flex justify-center mb-4">
+            {import.meta.env.VITE_TURNSTILE_SITE_KEY ? (
+              <Turnstile
+                siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+                onSuccess={(v) => setToken(v)}
+                onExpire={() => setToken(null)}
+                onError={() => setToken(null)}
+              />
+            ) : (
+              <p className="text-sm text-orange-700 bg-orange-50 border border-orange-200 rounded px-3 py-2">
+                Turnstile yapılandırılmadı. VITE_TURNSTILE_SITE_KEY ekleyin.
+              </p>
+            )}
+          </div>
+
           <button
             type="submit"
-            disabled={loading}
+            disabled={!token || loading}
             className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 rounded-lg shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
           >
             {loading ? (
