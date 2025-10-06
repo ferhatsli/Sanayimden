@@ -2,6 +2,7 @@ import { Hero } from './components/Hero';
 import { HowItWorks } from './components/HowItWorks';
 import { AppScreens } from './components/AppScreen';
 import { Benefits } from './components/Benefits';
+import { PricingPackages } from './components/PricingPackages';
 import { SignupForm } from './components/SignupForm';
 import { Footer } from './components/Footer';
 
@@ -19,6 +20,7 @@ function App() {
       <HowItWorks />
       <AppScreens />
       <Benefits />
+      <PricingPackages />
       <SignupForm />
       <Footer />
     </div>
