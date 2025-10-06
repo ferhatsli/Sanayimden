@@ -113,11 +113,11 @@ export function SignupForm() {
             <label className="block text-slate-900 font-semibold mb-4 text-lg">
               Paket Seçimi
             </label>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {packages.map((pkg) => (
                 <label
                   key={pkg.id}
-                  className={`cursor-pointer rounded-xl p-4 border-2 transition-all ${
+                  className={`cursor-pointer rounded-xl p-3 sm:p-4 border-2 transition-all ${
                     selectedPackage === pkg.id
                       ? 'border-orange-500 bg-orange-50'
                       : 'border-gray-300 bg-white hover:border-orange-300'
@@ -132,8 +132,8 @@ export function SignupForm() {
                     className="sr-only"
                   />
                   <div className="text-center">
-                    <div className="font-bold text-slate-900 mb-1">{pkg.duration}</div>
-                    <div className="text-2xl font-bold text-orange-600">{pkg.price} TL</div>
+                    <div className="font-bold text-slate-900 mb-1 text-sm sm:text-base">{pkg.duration}</div>
+                    <div className="text-xl sm:text-2xl font-bold text-orange-600 whitespace-nowrap">{pkg.price} TL</div>
                   </div>
                 </label>
               ))}
