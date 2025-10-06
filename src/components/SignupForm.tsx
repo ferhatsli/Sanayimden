@@ -1,6 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { supabase } from '../lib/supabase';
-import { CheckCircle, Loader2, AlertTriangle, CreditCard } from 'lucide-react';
+import { CheckCircle, Loader2, AlertTriangle, CreditCard, Copy, Check } from 'lucide-react';
 
 export function SignupForm() {
   const [fullName, setFullName] = useState('');
@@ -10,12 +10,32 @@ export function SignupForm() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [copiedIban, setCopiedIban] = useState(false);
+  const [copiedName, setCopiedName] = useState(false);
 
   const packages = [
     { id: '1', duration: '1 Aylık', price: '199.90' },
     { id: '3', duration: '3 Aylık', price: '499.90' },
     { id: '6', duration: '6 Aylık', price: '899.90' }
   ];
+
+  const iban = 'TR61 0004 6000 4088 8000 2198 51';
+  const accountName = 'Raif Kızılaslanoğlu';
+
+  const copyToClipboard = async (text: string, type: 'iban' | 'name') => {
+    try {
+      await navigator.clipboard.writeText(text);
+      if (type === 'iban') {
+        setCopiedIban(true);
+        setTimeout(() => setCopiedIban(false), 2000);
+      } else {
+        setCopiedName(true);
+        setTimeout(() => setCopiedName(false), 2000);
+      }
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -70,15 +90,64 @@ export function SignupForm() {
           <div className="bg-orange-50 border-2 border-orange-500 rounded-xl p-6">
             <div className="flex items-start gap-4 mb-6">
               <CreditCard size={32} className="text-orange-600 flex-shrink-0" />
-              <div>
+              <div className="w-full">
                 <h4 className="text-xl font-bold text-slate-900 mb-2">Ödeme Bilgileri</h4>
                 <p className="text-gray-700 mb-4">
                   Üyeliğinizin aktif olması için lütfen aşağıdaki hesaba ödeme yapınız:
                 </p>
-                <div className="bg-white rounded-lg p-4 border-2 border-orange-300">
-                  <p className="font-mono text-lg font-bold text-slate-900 mb-2">TR61 0004 6000 4088 8000 2198 51</p>
-                  <p className="text-gray-700 font-semibold">Raif Kızılaslanoğlu</p>
-                  <p className="text-orange-600 font-bold mt-2 text-xl">Tutar: {selectedPkg?.price} TL</p>
+                <div className="bg-white rounded-xl p-5 border-2 border-orange-300 shadow-sm space-y-4">
+                  <div>
+                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">
+                      IBAN Numarası
+                    </label>
+                    <div className="flex items-center justify-between gap-2 bg-slate-50 rounded-lg p-3 border border-slate-200">
+                      <span className="font-mono text-base sm:text-lg font-bold text-slate-900 break-all">
+                        {iban}
+                      </span>
+                      <button
+                        onClick={() => copyToClipboard(iban, 'iban')}
+                        className="flex-shrink-0 p-2 hover:bg-orange-100 rounded-lg transition-colors"
+                        title="IBAN'ı kopyala"
+                      >
+                        {copiedIban ? (
+                          <Check size={20} className="text-green-600" />
+                        ) : (
+                          <Copy size={20} className="text-orange-600" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">
+                      Alıcı Adı
+                    </label>
+                    <div className="flex items-center justify-between gap-2 bg-slate-50 rounded-lg p-3 border border-slate-200">
+                      <span className="text-base sm:text-lg font-semibold text-slate-900">
+                        {accountName}
+                      </span>
+                      <button
+                        onClick={() => copyToClipboard(accountName, 'name')}
+                        className="flex-shrink-0 p-2 hover:bg-orange-100 rounded-lg transition-colors"
+                        title="İsmi kopyala"
+                      >
+                        {copiedName ? (
+                          <Check size={20} className="text-green-600" />
+                        ) : (
+                          <Copy size={20} className="text-orange-600" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-orange-200">
+                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">
+                      Ödenecek Tutar
+                    </label>
+                    <div className="text-2xl sm:text-3xl font-bold text-orange-600">
+                      {selectedPkg?.price} TL
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
