@@ -91,31 +91,33 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
             </p>
           </div>
 
-          <div className="bg-orange-50 border-2 border-orange-500 rounded-xl p-6">
-            <div className="flex items-start gap-4 mb-6">
+          <div className="bg-orange-50 border-2 border-orange-500 rounded-xl p-6 overflow-hidden">
+            <div className="flex items-start gap-4 mb-4">
               <CreditCard size={32} className="text-orange-600 flex-shrink-0" />
-              <div className="w-full">
+              <div className="flex-1">
                 <h4 className="text-xl font-bold text-slate-900 mb-2">Ödeme Bilgileri</h4>
-                <p className="text-gray-700 mb-4">
+                <p className="text-gray-700">
                   Üyeliğinizin aktif olması için lütfen aşağıdaki hesaba ödeme yapınız:
                 </p>
-                <div className="bg-white rounded-xl p-5 border-2 border-orange-300 shadow-sm space-y-4">
+              </div>
+            </div>
+            <div className="bg-white rounded-xl p-5 border-2 border-orange-300 shadow-sm space-y-4">
                   <div>
                     <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 block">
                       IBAN Numarası
                     </label>
-                    <div className="w-full rounded-2xl border-2 border-orange-300 bg-white shadow-sm overflow-hidden">
-                      <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 px-4 py-3 sm:py-4 w-full">
+                    <div className="w-full max-w-full rounded-2xl border-2 border-orange-300 bg-white shadow-sm overflow-hidden">
+                      <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 px-4 py-3 sm:py-4 w-full max-w-full">
                         <div className="min-w-0 flex-1 overflow-x-auto max-w-full">
                           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200">
-                            <span className="font-mono text-lg sm:text-2xl font-bold text-slate-900 tracking-widest select-all whitespace-pre">
+                            <span className="font-mono text-base sm:text-2xl font-bold text-slate-900 tracking-wider sm:tracking-widest select-all whitespace-pre">
                               {formattedIban}
                             </span>
                           </div>
                         </div>
                         <button
                           onClick={() => copyToClipboard(iban, 'iban')}
-                          className={`flex-shrink-0 inline-flex items-center gap-2 px-3 sm:px-4 h-10 rounded-lg border text-sm font-semibold transition mt-2 sm:mt-0 ${
+                          className={`w-full sm:w-auto flex-shrink-0 inline-flex items-center justify-center gap-2 px-3 sm:px-4 h-10 rounded-lg border text-sm font-semibold transition mt-2 sm:mt-0 ${
                             copiedIban ? 'border-green-300 bg-green-50 text-green-700' : 'border-orange-200 bg-orange-50 hover:bg-orange-100 text-orange-700'
                           }`}
                           title="IBAN'ı kopyala"
@@ -162,8 +164,7 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+            
 
             <div className="bg-red-50 border-2 border-red-400 rounded-lg p-4 flex items-start gap-3">
               <AlertTriangle size={24} className="text-red-600 flex-shrink-0 mt-0.5" />
