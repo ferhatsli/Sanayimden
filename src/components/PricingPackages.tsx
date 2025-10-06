@@ -1,18 +1,25 @@
 import { Check } from 'lucide-react';
 
-export function PricingPackages() {
+type PricingPackagesProps = {
+  onSelectPackage?: (id: '1' | '3' | '6') => void;
+};
+
+export function PricingPackages({ onSelectPackage }: PricingPackagesProps) {
   const packages = [
     {
+      id: '1' as const,
       duration: '1 Aylık',
       price: '199.90',
       popular: false
     },
     {
+      id: '3' as const,
       duration: '3 Aylık',
       price: '499.90',
       popular: true
     },
     {
+      id: '6' as const,
       duration: '6 Aylık',
       price: '899.90',
       popular: false
@@ -77,10 +84,7 @@ export function PricingPackages() {
                 <div className="text-center">
                   <button
                     onClick={() => {
-                      const formElement = document.getElementById('signup-form');
-                      if (formElement) {
-                        formElement.scrollIntoView({ behavior: 'smooth' });
-                      }
+                      onSelectPackage?.(pkg.id);
                     }}
                     className={`w-full font-bold text-lg px-6 py-3 rounded-lg shadow-md transition-all transform hover:scale-105 ${
                       pkg.popular

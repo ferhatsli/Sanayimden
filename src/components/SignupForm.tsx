@@ -2,11 +2,15 @@ import { useState, FormEvent } from 'react';
 import { supabase } from '../lib/supabase';
 import { CheckCircle, Loader2, AlertTriangle, CreditCard, Copy, Check } from 'lucide-react';
 
-export function SignupForm() {
+type SignupFormProps = {
+  selectedPackage: '1' | '3' | '6';
+  setSelectedPackage: (id: '1' | '3' | '6') => void;
+};
+
+export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormProps) {
   const [fullName, setFullName] = useState('');
   const [shopName, setShopName] = useState('');
   const [phone, setPhone] = useState('');
-  const [selectedPackage, setSelectedPackage] = useState('3');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
@@ -21,6 +25,7 @@ export function SignupForm() {
 
   const iban = 'TR61 0004 6000 4088 8000 2198 51';
   const accountName = 'Raif Kızılaslanoğlu';
+  const formattedIban = iban.replace(/\s+/g, '').replace(/(.{4})/g, '$1 ').trim();
 
   const copyToClipboard = async (text: string, type: 'iban' | 'name') => {
     try {
@@ -64,7 +69,6 @@ export function SignupForm() {
       setFullName('');
       setShopName('');
       setPhone('');
-      setSelectedPackage('3');
     } catch (err) {
       setError('Bir hata oluştu. Lütfen tekrar deneyin.');
       console.error('Error submitting form:', err);
@@ -97,25 +101,34 @@ export function SignupForm() {
                 </p>
                 <div className="bg-white rounded-xl p-5 border-2 border-orange-300 shadow-sm space-y-4">
                   <div>
-                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">
+                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 block">
                       IBAN Numarası
                     </label>
-                    <div className="flex items-center justify-between gap-2 bg-slate-50 rounded-lg p-3 border border-slate-200">
-                      <span className="font-mono text-base sm:text-lg font-bold text-slate-900 break-all">
-                        {iban}
-                      </span>
-                      <button
-                        onClick={() => copyToClipboard(iban, 'iban')}
-                        className="flex-shrink-0 p-2 hover:bg-orange-100 rounded-lg transition-colors"
-                        title="IBAN'ı kopyala"
-                      >
-                        {copiedIban ? (
-                          <Check size={20} className="text-green-600" />
-                        ) : (
-                          <Copy size={20} className="text-orange-600" />
-                        )}
-                      </button>
+                    <div className="w-full rounded-2xl border-2 border-orange-300 bg-white shadow-sm overflow-hidden">
+                      <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 px-4 py-3 sm:py-4 w-full">
+                        <div className="min-w-0 flex-1 overflow-x-auto max-w-full">
+                          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200">
+                            <span className="font-mono text-lg sm:text-2xl font-bold text-slate-900 tracking-widest select-all whitespace-pre">
+                              {formattedIban}
+                            </span>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => copyToClipboard(iban, 'iban')}
+                          className={`flex-shrink-0 inline-flex items-center gap-2 px-3 sm:px-4 h-10 rounded-lg border text-sm font-semibold transition mt-2 sm:mt-0 ${
+                            copiedIban ? 'border-green-300 bg-green-50 text-green-700' : 'border-orange-200 bg-orange-50 hover:bg-orange-100 text-orange-700'
+                          }`}
+                          title="IBAN'ı kopyala"
+                          aria-label="IBAN'ı kopyala"
+                        >
+                          {copiedIban ? <Check size={18} className="text-green-600" /> : <Copy size={18} className="text-orange-600" />}
+                          {copiedIban ? 'Kopyalandı' : 'Kopyala'}
+                        </button>
+                      </div>
                     </div>
+                    <p className="mt-2 text-xs text-gray-500">
+                      IBAN gruplandırılarak gösterilir, kopyala düğmesi ham değeri kopyalar.
+                    </p>
                   </div>
 
                   <div>
@@ -157,7 +170,7 @@ export function SignupForm() {
               <div>
                 <p className="text-red-800 font-semibold mb-1">ÖNEMLİ UYARI:</p>
                 <p className="text-red-700 text-sm leading-relaxed">
-                  Ödeme yapılmadan üyelik aktif olmayacaktır. Kayıt olduktan sonra 48 saat içinde ödeme yapılmazsa başvurunuz otomatik olarak silinecektir. Ödeme yaptıktan sonra dekont/makbuzunuzu WhatsApp üzerinden bize iletiniz.
+                  Ödeme yapılmadan üyelik aktif olmayacaktır. Kayıt olduktan sonra 48 saat içinde ödeme yapılmazsa başvurunuz otomatik olarak silinecektir.
                 </p>
               </div>
             </div>
@@ -197,7 +210,7 @@ export function SignupForm() {
                     name="package"
                     value={pkg.id}
                     checked={selectedPackage === pkg.id}
-                    onChange={(e) => setSelectedPackage(e.target.value)}
+                    onChange={(e) => setSelectedPackage(e.target.value as '1' | '3' | '6')}
                     className="sr-only"
                   />
                   <div className="text-center">

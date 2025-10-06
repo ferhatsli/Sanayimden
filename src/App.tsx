@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Hero } from './components/Hero';
 import { HowItWorks } from './components/HowItWorks';
 import { AppScreens } from './components/AppScreen';
@@ -7,6 +8,7 @@ import { SignupForm } from './components/SignupForm';
 import { Footer } from './components/Footer';
 
 function App() {
+  const [selectedPackage, setSelectedPackage] = useState('3');
   const scrollToForm = () => {
     const formElement = document.getElementById('signup-form');
     if (formElement) {
@@ -20,8 +22,8 @@ function App() {
       <HowItWorks />
       <AppScreens />
       <Benefits />
-      <PricingPackages />
-      <SignupForm />
+      <PricingPackages onSelectPackage={(id) => { setSelectedPackage(id); scrollToForm(); }} />
+      <SignupForm selectedPackage={selectedPackage} setSelectedPackage={setSelectedPackage} />
       <Footer />
     </div>
   );
