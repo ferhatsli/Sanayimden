@@ -11,6 +11,22 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
   const [fullName, setFullName] = useState('');
   const [shopName, setShopName] = useState('');
   const [phone, setPhone] = useState('');
+  
+  // Yardımcı: Farklı giriş biçimlerini yerel TR formatına çevirir.
+  // "+90 505 ...", "90505 ...", "505 ..." -> "0505..." (11 hane)
+  const toLocalTRPhone = (raw: string) => {
+    const digits = (raw || '').replace(/\D/g, '');
+    // Son 10 haneyi al (ülke kodu vb. at)
+    const last10 = digits.slice(-10);
+    if (last10.length !== 10) return '';
+    return `0${last10}`;
+  };
+
+  const onPhoneChange = (value: string) => {
+    // Sadece rakam kabul et; 11 haneyle sınırla
+    const onlyDigits = value.replace(/\D/g, '').slice(0, 11);
+    setPhone(onlyDigits);
+  };
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
@@ -51,13 +67,21 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
     try {
       const selectedPkg = packages.find(p => p.id === selectedPackage);
 
+      // Telefonu normalize et ve doğrula
+      const normalizedPhone = toLocalTRPhone(phone);
+      if (!/^0\d{10}$/.test(normalizedPhone)) {
+        setError("Telefon numarası geçersiz. Lütfen 11 haneli olarak girin. Örn: 05054345555");
+        setLoading(false);
+        return;
+      }
+
       const { error: submitError } = await supabase
         .from('mechanic_signups')
         .insert([
           {
             full_name: fullName,
             shop_name: shopName,
-            phone: phone,
+            phone: normalizedPhone,
             package_duration: selectedPkg?.duration,
             package_price: selectedPkg?.price
           }
@@ -260,9 +284,18 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
             <input
               type="tel"
               id="phone"
+              inputMode="numeric"
+              pattern="0[0-9]{10}"
+              maxLength={11}
+              minLength={11}
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => onPhoneChange(e.target.value)}
+              onBlur={() => {
+                const normalized = toLocalTRPhone(phone);
+                if (normalized) setPhone(normalized);
+              }}
               required
+              title="11 haneli, 0 ile başlayan format: 05054345555"
               className="w-full px-4 py-4 text-lg border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none transition-colors"
               placeholder="Örn: 0555 123 45 67"
             />
