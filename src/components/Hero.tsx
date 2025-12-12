@@ -1,10 +1,13 @@
-import { Wrench } from 'lucide-react';
+import { Wrench, Package } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface HeroProps {
   onScrollToForm: () => void;
 }
 
 export function Hero({ onScrollToForm }: HeroProps) {
+  const navigate = useNavigate();
+
   return (
     <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-16 px-6 md:py-24">
       <div className="max-w-6xl mx-auto">
@@ -24,12 +27,19 @@ export function Hero({ onScrollToForm }: HeroProps) {
               Binlerce araç sahibine ulaşarak işlerinizi büyütün, müşteri ağınızı genişletin. Uygulamamıza kayıt olarak hizmetlerinizi sergileyebilir, konumunuza en yakın araç sahipleriyle buluşabilirsiniz.
             </p>
 
-            <div className="flex md:justify-start justify-center">
+            <div className="flex flex-col md:flex-row md:justify-start justify-center gap-4">
               <button
                 onClick={onScrollToForm}
                 className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg px-10 py-4 rounded-lg shadow-lg transition-all transform hover:scale-105"
               >
                 Ücretsiz Kaydol
+              </button>
+              <button
+                onClick={() => navigate('/suppliers-login')}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg px-10 py-4 rounded-lg shadow-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2"
+              >
+                <Package size={24} />
+                Yedek Parçacıları Gör
               </button>
             </div>
           </div>

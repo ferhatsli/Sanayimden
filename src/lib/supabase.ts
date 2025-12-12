@@ -1,8 +1,5 @@
-// Minimal ambient declaration to satisfy type checking in environments without local types
-declare module '@supabase/supabase-js' {
-  export function createClient(url: string, key: string): any;
-}
-import { createClient } from '@supabase/supabase-js';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 
 // Use "any" to avoid type-resolution issues in environments without installed node_modules/types.
 const env: any = (import.meta as any).env ?? {};
@@ -24,12 +21,11 @@ function createNotConfiguredClient(): any {
 
 export const supabase: any =
   supabaseUrl && supabaseAnonKey
-    ? createClient(supabaseUrl, supabaseAnonKey)
+    ? createSupabaseClient(supabaseUrl, supabaseAnonKey)
     : createNotConfiguredClient();
 
 if (!(supabaseUrl && supabaseAnonKey)) {
   // Surface a helpful log in both dev and prod environments
   // to aid misconfiguration diagnosis during deploys.
-  // eslint-disable-next-line no-console
   console.error('[Supabase] Missing configuration. Ensure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are set.');
 }
