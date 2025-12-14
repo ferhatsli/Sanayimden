@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { Loader2, Phone, LogOut } from 'lucide-react';
+import { Loader2, Phone, LogOut, BadgePercent } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export type Supplier = {
@@ -9,6 +9,7 @@ export type Supplier = {
   contact_person: string;
   phone: string;
   brands: string;
+  discount?: string;
   email?: string;
   address?: string;
   created_at: string;
@@ -100,6 +101,22 @@ export function SuppliersList() {
           </div>
         )}
 
+        <div className="bg-orange-50 border border-orange-100 rounded-xl p-6 space-y-2 mb-8">
+          <h2 className="text-2xl font-semibold text-orange-800">Üyelere Özel Yedek Parça Fiyatları</h2>
+          <p className="text-orange-700 leading-relaxed">
+            Sanayimden.com’un yedek parçacılarla yaptığı anlaşmalar, Türkiye genelindeki piyasa fiyatları referans alınarak belirlenmiştir.
+            Avantajlı fiyatlardan yalnızca üyelerimiz faydalanır.
+          </p>
+        </div>
+
+        <div className="flex justify-center mb-10">
+          <img
+            src="/cars_logo.png"
+            alt="Sanayimden üyelerine özel yedek parça fiyatları"
+            className="max-w-xs md:max-w-sm drop-shadow-lg"
+          />
+        </div>
+
         {filteredSuppliers.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-600 text-lg">
@@ -143,6 +160,16 @@ export function SuppliersList() {
                           {brand.trim()}
                         </span>
                       ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-1">
+                      Sanayimden üyelerine özel indirim
+                    </p>
+                    <div className="inline-flex items-center gap-2 bg-amber-100 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">
+                      <BadgePercent size={16} />
+                      {supplier.discount?.trim() || 'İndirim bilgisi paylaşılmadı'}
                     </div>
                   </div>
 

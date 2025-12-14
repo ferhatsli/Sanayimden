@@ -35,6 +35,7 @@
 | `contact_person` | TEXT | Yetkili kişinin adı |
 | `phone` | TEXT | Telefon numarası |
 | `brands` | TEXT | Virgülle ayrılmış marka listesi |
+| `discount` | TEXT | Sağlanan indirim bilgisi (ör. Minimum %10) |
 | `email` | TEXT | E-mail adresi (opsiyonel) |
 | `address` | TEXT | Adres (opsiyonel) |
 | `created_at` | TIMESTAMP | Oluşturma tarihi |

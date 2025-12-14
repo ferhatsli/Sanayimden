@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { Loader2, ArrowLeft, Phone, Mail, MapPin } from 'lucide-react';
+import { Loader2, ArrowLeft, Phone, Mail, MapPin, BadgePercent } from 'lucide-react';
 import { Supplier } from './SuppliersList';
 
 export function SupplierDetail() {
@@ -154,6 +154,17 @@ export function SupplierDetail() {
                     {brand.trim()}
                   </div>
                 ))}
+              </div>
+            </div>
+
+            {/* Discount */}
+            <div>
+              <h3 className="text-sm uppercase tracking-wider text-gray-500 font-semibold mb-4">
+                Sanayimden üyelerine özel indirim
+              </h3>
+              <div className="inline-flex items-center gap-3 bg-amber-50 border border-amber-200 text-orange-800 px-4 py-3 rounded-lg font-semibold text-lg shadow-sm">
+                <BadgePercent size={24} />
+                {supplier.discount?.trim() || 'İndirim bilgisi paylaşılmadı'}
               </div>
             </div>
 
