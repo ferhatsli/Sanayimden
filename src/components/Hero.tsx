@@ -20,7 +20,7 @@ export function Hero({ onScrollToForm }: HeroProps) {
             </div>
 
             <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight md:text-left text-center">
-              Sanayimden'e Katıl – Yeni Müşteriler Seni Bekliyor!
+              Sanayimden'e Katıl - Türkiye’nin Ustalara Özel Sanayi Platformu
             </h1>
 
             <p className="text-xl text-gray-300 mb-10 leading-relaxed md:text-left text-center">
@@ -32,7 +32,7 @@ export function Hero({ onScrollToForm }: HeroProps) {
                 onClick={onScrollToForm}
                 className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg px-10 py-4 rounded-lg shadow-lg transition-all transform hover:scale-105"
               >
-                Ücretsiz Kaydol
+                Hemen Kaydol
               </button>
               <button
                 onClick={() => navigate('/suppliers-login')}
