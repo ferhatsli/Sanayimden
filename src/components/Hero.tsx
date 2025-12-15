@@ -24,7 +24,7 @@ export function Hero({ onScrollToForm }: HeroProps) {
             </h1>
 
             <p className="text-xl text-gray-300 mb-10 leading-relaxed md:text-left text-center">
-              Binlerce araç sahibine ulaşarak işlerinizi büyütün, müşteri ağınızı genişletin. Uygulamamıza kayıt olarak hizmetlerinizi sergileyebilir, konumunuza en yakın araç sahipleriyle buluşabilirsiniz.
+              Sanayimden, ustalara hem yedek parçada avantajlı fiyatlar hem de yeni müşterilere ulaşma imkânı sunan dijital sanayi platformudur.
             </p>
 
             <div className="flex flex-col md:flex-row md:justify-start justify-center gap-4">
