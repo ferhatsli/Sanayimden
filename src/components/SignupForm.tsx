@@ -34,6 +34,14 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
   const [error, setError] = useState('');
   const [copiedIban, setCopiedIban] = useState(false);
   const [copiedName, setCopiedName] = useState(false);
+  const [submittedInfo, setSubmittedInfo] = useState<{
+    fullName: string;
+    shopName: string;
+    phone: string;
+    packageDuration?: string;
+    packagePrice?: string;
+  } | null>(null);
+  const isTurnstileEnabled = Boolean(import.meta.env.VITE_TURNSTILE_SITE_KEY);
 
   const packages = [
     { id: '1', duration: '1 Aylık', price: '199.90' },
@@ -78,7 +86,7 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
       }
 
       // Turnstile doğrulaması (client-side gate)
-      if (!token) {
+      if (isTurnstileEnabled && !token) {
         setError('Lütfen robot olmadığınızı doğrulayın.');
         setLoading(false);
         return;
@@ -98,6 +106,13 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
 
       if (submitError) throw submitError;
 
+      setSubmittedInfo({
+        fullName,
+        shopName,
+        phone: normalizedPhone,
+        packageDuration: selectedPkg?.duration,
+        packagePrice: selectedPkg?.price
+      });
       setSuccess(true);
       setToken(null);
       setFullName('');
@@ -113,6 +128,10 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
 
   if (success) {
     const selectedPkg = packages.find(p => p.id === selectedPackage);
+    const whatsappMessage = encodeURIComponent(
+      `Merhaba, dekontu iletiyorum.\nAd Soyad: ${submittedInfo?.fullName ?? ''}\nDükkan: ${submittedInfo?.shopName ?? ''}\nTelefon: ${submittedInfo?.phone ?? ''}\nPaket: ${submittedInfo?.packageDuration ?? selectedPkg?.duration ?? ''} - ${submittedInfo?.packagePrice ?? selectedPkg?.price ?? ''} TL`
+    );
+    const whatsappLink = `https://wa.me/905511721354?text=${whatsappMessage}`;
 
     return (
       <section id="signup-form" className="py-16 px-6 bg-white">
@@ -133,12 +152,23 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
                 <p className="text-gray-700">
                   Üyeliğinizin aktif olması için lütfen aşağıdaki hesaba ödeme yapınız:
                 </p>
-                <p className="text-gray-800 font-semibold mt-2">
-                  Dekontu WhatsApp'tan bu numaraya gönderin: <a href="tel:+905511721354" className="text-orange-700 underline">0551 172 13 54</a>
-                </p>
               </div>
             </div>
             <div className="bg-white rounded-xl p-5 border-2 border-orange-300 shadow-sm space-y-4">
+                  <div className="rounded-lg border border-green-300 bg-green-50 px-4 py-3 shadow-sm flex flex-wrap items-center gap-3">
+                    <div className="flex-1 text-green-800">
+                      <p className="font-semibold">Dekontu WhatsApp'tan gönderin</p>
+                      <p className="font-bold text-lg">0551 172 13 54</p>
+                    </div>
+                    <a
+                      href={whatsappLink}
+                      className="px-3 py-2 rounded-md border border-green-500 bg-green-600 text-white font-semibold hover:bg-green-700 transition"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      WhatsApp
+                    </a>
+                  </div>
                   <div>
                     <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 block">
                       IBAN Numarası
@@ -322,7 +352,7 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
 
           {/* Turnstile */}
           <div className="flex justify-center mb-4">
-            {import.meta.env.VITE_TURNSTILE_SITE_KEY ? (
+            {isTurnstileEnabled ? (
               <Turnstile
                 siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
                 onSuccess={(v) => setToken(v)}
@@ -330,15 +360,15 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
                 onError={() => setToken(null)}
               />
             ) : (
-              <p className="text-sm text-orange-700 bg-orange-50 border border-orange-200 rounded px-3 py-2">
-                Turnstile yapılandırılmadı. VITE_TURNSTILE_SITE_KEY ekleyin.
+              <p className="text-sm text-green-800 bg-green-50 border border-green-200 rounded px-3 py-2">
+                Cloudflare doğrulama local geliştirmede devre dışı. Deploy öncesi yeniden açın.
               </p>
             )}
           </div>
 
           <button
             type="submit"
-            disabled={!token || loading}
+            disabled={isTurnstileEnabled ? !token || loading : loading}
             className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 rounded-lg shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
           >
             {loading ? (
