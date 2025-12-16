@@ -133,6 +133,9 @@ export function SignupForm({ selectedPackage, setSelectedPackage }: SignupFormPr
                 <p className="text-gray-700">
                   Üyeliğinizin aktif olması için lütfen aşağıdaki hesaba ödeme yapınız:
                 </p>
+                <p className="text-gray-800 font-semibold mt-2">
+                  Dekontu WhatsApp'tan bu numaraya gönderin: <a href="tel:+905511721354" className="text-orange-700 underline">0551 172 13 54</a>
+                </p>
               </div>
             </div>
             <div className="bg-white rounded-xl p-5 border-2 border-orange-300 shadow-sm space-y-4">

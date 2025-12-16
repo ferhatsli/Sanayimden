@@ -8,11 +8,11 @@ export function Footer() {
 
         <div className="flex flex-col sm:flex-row justify-center items-center gap-6 mb-8">
           <a
-            href="tel:+905551234567"
+            href="tel:+905511721354"
             className="flex items-center gap-2 text-lg hover:text-orange-400 transition-colors"
           >
             <Phone size={24} />
-            <span>0555 123 45 67</span>
+            <span>0551 172 13 54</span>
           </a>
 
           <a

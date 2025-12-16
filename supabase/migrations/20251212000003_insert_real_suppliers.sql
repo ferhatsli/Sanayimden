@@ -1,7 +1,5 @@
 -- Insert real suppliers from the uploaded list
 
-DELETE FROM suppliers; -- Önceki örnek verileri temizle
-
 INSERT INTO suppliers (company_name, contact_person, phone, brands) VALUES
 ('Besa Otomotiv', 'Berat Orman', '0530 817 6118', 'BMW, Mercedes, Land Rover, Mini Cooper, Jaguar'),
 ('Biz Oto', 'Ümit ve Berke', '0543 180 1919', 'Honda, Hyundai, Kia, Toyota, Nissan'),
